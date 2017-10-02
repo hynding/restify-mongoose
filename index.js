@@ -142,6 +142,13 @@ var parseCommaParam = function(commaParam) {
   return commaParam.replace(/,/g, ' ');
 };
 
+var transformObjectParam = function(populateParam) {
+  if (typeof populateParam === 'string' && populateParam[0]==='{') {
+    return JSON.parse(populateParam);
+  }
+  return parseCommaParam(populateParam);
+};
+
 var applyPageLinks = function (req, res, page, pageSize, baseUrl) {
   function makeLink(page, rel) {
     var path = url.parse(req.url, true);
@@ -200,7 +207,7 @@ var applySelect = function(query, options, req){
 var applyPopulate = function(query, options, req){
   var populate = req.query.populate || options.populate;
   if (populate) {
-    query = query.populate(parseCommaParam(populate));
+    query = query.populate(transformObjectParam(populate));
   }
 };
 

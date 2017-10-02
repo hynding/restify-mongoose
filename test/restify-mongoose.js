@@ -8,6 +8,7 @@ var server = require('./server');
 var Note = require('./note');
 var Author = require('./author');
 var mongoTest = require('./util/mongotest');
+const mongoTestHost = 'mongodb://192.168.99.100/restify-mongoose-tests';
 
 describe('restify-mongoose', function () {
   describe('constructor', function () {
@@ -19,7 +20,7 @@ describe('restify-mongoose', function () {
   });
 
   describe('query', function () {
-    before(mongoTest.prepareDb('mongodb://localhost/restify-mongoose-tests'));
+    before(mongoTest.prepareDb(mongoTestHost));
 
     before(function(done) {
       var authorsToCreate = [
@@ -250,7 +251,7 @@ describe('restify-mongoose', function () {
   });
 
   describe('pagination', function () {
-    before(mongoTest.prepareDb('mongodb://localhost/restify-mongoose-tests'));
+    before(mongoTest.prepareDb(mongoTestHost));
     before(mongoTest.populate(Note,
       {title: 'first', content: 'a', date: new Date()},
       {title: 'second', content: 'a', date: new Date()},
@@ -573,7 +574,7 @@ describe('restify-mongoose', function () {
   });
 
   describe('detail', function () {
-    before(mongoTest.prepareDb('mongodb://localhost/restify-mongoose-tests'));
+    before(mongoTest.prepareDb(mongoTestHost));
     after(mongoTest.disconnect());
 
     it('should select detail note', function (done) {
@@ -751,7 +752,7 @@ describe('restify-mongoose', function () {
   });
 
   describe('insert', function () {
-    before(mongoTest.prepareDb('mongodb://localhost/restify-mongoose-tests'));
+    before(mongoTest.prepareDb(mongoTestHost));
     after(mongoTest.disconnect());
 
     it('should create note', function (done) {
@@ -853,7 +854,7 @@ describe('restify-mongoose', function () {
   });
 
   describe('update', function () {
-    before(mongoTest.prepareDb('mongodb://localhost/restify-mongoose-tests'));
+    before(mongoTest.prepareDb(mongoTestHost));
     after(mongoTest.disconnect());
 
     it('should update existing note', function (done) {
@@ -1065,7 +1066,7 @@ describe('restify-mongoose', function () {
   });
 
   describe('delete', function () {
-    before(mongoTest.prepareDb('mongodb://localhost/restify-mongoose-tests'));
+    before(mongoTest.prepareDb(mongoTestHost));
     after(mongoTest.disconnect());
 
     it('should delete existing note', function (done) {
@@ -1175,7 +1176,7 @@ describe('restify-mongoose', function () {
       };
     };
 
-    before(mongoTest.prepareDb('mongodb://localhost/restify-mongoose-tests'));
+    before(mongoTest.prepareDb(mongoTestHost));
     after(mongoTest.disconnect());
 
     it('should return query notes', function (done) {
@@ -1456,7 +1457,7 @@ describe('restify-mongoose', function () {
   });
 
   describe('output formats', function () {
-    before(mongoTest.prepareDb('mongodb://localhost/restify-mongoose-tests'));
+    before(mongoTest.prepareDb(mongoTestHost));
     after(mongoTest.disconnect());
 
     it('should return json-api format if defined in options', function (done) {
@@ -1475,7 +1476,7 @@ describe('restify-mongoose', function () {
   });
 
   describe('errors', function () {
-    before(mongoTest.prepareDb('mongodb://localhost/restify-mongoose-tests'));
+    before(mongoTest.prepareDb(mongoTestHost));
     after(mongoTest.disconnect());
 
     it('should serve mongoose validation errors as errors property in body for create', function (done) {
