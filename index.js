@@ -143,10 +143,13 @@ var parseCommaParam = function(commaParam) {
 };
 
 var transformObjectParam = function(populateParam) {
-  if (typeof populateParam === 'string' && populateParam[0]==='{') {
-    return JSON.parse(populateParam);
+  if (typeof populateParam === 'string') {
+    if (populateParam[0]==='{') {
+      return JSON.parse(populateParam);
+    }
+    return parseCommaParam(populateParam);
   }
-  return parseCommaParam(populateParam);
+  return populateParam;
 };
 
 var applyPageLinks = function (req, res, page, pageSize, baseUrl) {
